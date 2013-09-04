@@ -5,7 +5,7 @@
  *
  * @author Alain Fresco
  * @package Modele
- * @since 28.05.2013
+ * @since 28.08.2013
  */
 class Post extends AppModel {
     

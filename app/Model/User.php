@@ -11,7 +11,7 @@
  *
  * @author Alain Fresco
  * @package Modele
- * @since 26.05.2013
+ * @since 26.08.2013
  */
 class User extends AppModel {
 

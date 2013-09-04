@@ -5,7 +5,7 @@
  *
  * @author Alain Fresco
  * @package Modele
- * @since 14.05.2013
+ * @since 14.08.2013
  */
 class Team extends AppModel {
     
