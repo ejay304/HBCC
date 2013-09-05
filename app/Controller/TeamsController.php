@@ -26,6 +26,49 @@ class TeamsController extends AppController {
     }
 
     /**
+     * Affiche les informations d'une équipe en particulier
+     * 
+     * @since 15.08.2013
+     * @param int $id l'identifiant de l'équipe
+     */
+    function admin_edit($id = null) {
+        if ($this->request->is('put') || $this->request->is('post')) {
+
+            // On récupère les données transmise
+            $data = $this->request->data;
+
+            // On crée les répertoire pour acceuilir les images
+            $dir = IMAGES . "teams";
+            if (!file_exists($dir))
+                mkdir($dir, 0777);
+
+            $f = explode('.', $data['Team']['photo']['name']);
+
+            $ext = '.' . strtolower(end($f));
+            $filename = Inflector::slug(implode('.', array_slice($f, 0, -1)), '-');
+
+            //Save in db
+            $sucess = $this->Team->save(array(
+                'name' => $data['Team']['name'],
+                'photo' => "teams" . '/' . $filename . $ext,
+                'groupid' => $data['Team']['group'],
+                'arhid' => $data['Team']['arhid']
+            ));
+
+            if ($sucess) {
+                move_uploaded_file($data['Team']['photo']['tmp_name'], $dir . DS . $filename . $ext);
+                $id ? $this->Session->setFlash("Votre équipe a été mise à jour ", 'notif', array('type' => "success")) : $this->Session->setFlash("Votre équipe a été ajoutée", 'notif', array('type' => "success"));
+                $this->redirect(array('action' => 'index'));
+            }
+            else
+                $this->Session->setFlash("L'image n'est pas au bon format");
+        } elseif ($id) {
+            $this->Team->id = $id;
+            $this->request->data = $this->Team->read();
+        }
+    }
+
+    /**
      * Affiche la liste de matchs d'une équipe en particulier
      * 
      * @since 15.08.2013
@@ -144,7 +187,7 @@ class TeamsController extends AppController {
         /* Déclaration des variables */
         App::uses('HttpSocket', 'Network/Http');
         App::uses('HttpResponseCake', 'Network/Http');
-        
+
         // Définit que l'on n'utilise pas de layout pour l'affichage
         $this->render("get_datas", false);
 
@@ -246,7 +289,8 @@ class TeamsController extends AppController {
         $expPsts = "/<td align=center width=20><span class=\"normal\">[\d]{1,2}<\/td>/";
 
 
-        $url = 'http://vvs.handball.ch/vvs/resultatanzeige.asp';;
+        $url = 'http://vvs.handball.ch/vvs/resultatanzeige.asp';
+        ;
         $HttpSocket = new HttpSocket();
         $htmlSource = new HttpSocket();
         $results = array();

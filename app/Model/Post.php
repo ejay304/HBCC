@@ -9,6 +9,8 @@
  */
 class Post extends AppModel {
     
+    var $belongsTo = 'Team';
+    
 }
 
 ?>

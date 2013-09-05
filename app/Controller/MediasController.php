@@ -61,7 +61,6 @@ class MediasController extends AppController {
      */
     function admin_show($id = 1) {
         if ($this->request->is('post')) {
-            debug($this->request->data['Media']);
             $this->set($this->request->data['Media']);
             $this->layout = false;
             $this->render('tinymce');
