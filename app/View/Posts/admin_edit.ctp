@@ -33,7 +33,7 @@ theme_advanced_resizing : true,
 paste_remove_styles : true,
 paste_remove_spans : true,
 paste_stripe_class_Attributes : 'all',
-image_explorer : '<?php echo $this->Html->url(array('controller' => 'medias', 'action' => 'index')); ?>'
+image_explorer : ' <?php echo $this->Html->url(array("controller" => "medias", "action" => "index")); ?> '
 });
 
 function send_to_editor(content){

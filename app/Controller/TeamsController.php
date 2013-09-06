@@ -26,9 +26,23 @@ class TeamsController extends AppController {
     }
 
     /**
-     * Affiche les informations d'une équipe en particulier
+     * Affiche la liste des équipe et permet de les supprimer ou de les modifier
      * 
-     * @since 15.08.2013
+     * @since 05.09.2013
+     * @param int $id l'identifiant de l'équipe
+     */
+    function admin_index() {
+        $d['teams'] = $this->Paginate('Team');
+        $this->set($d);
+    }
+
+    /**
+     * Permet d'ajouter ou de modifier une équipe
+     * 
+     * Si le paramètre id est définit il s'agit d'une modification si il n'est
+     * pas définit il s'agit d'un ajout
+     * 
+     * @since 05.09.2013
      * @param int $id l'identifiant de l'équipe
      */
     function admin_edit($id = null) {
@@ -66,6 +80,22 @@ class TeamsController extends AppController {
             $this->Team->id = $id;
             $this->request->data = $this->Team->read();
         }
+    }
+
+    /**
+     * Permet de supprimer l'équipe dont l'id est passé en paramètre
+     * 
+     * @since 06.09.2013
+     * @param int $id l'identifiant de l'équipe
+     */
+    function admin_delete($id) {
+        $resultat = $this->Team->delete($id);
+        if ($resultat) {
+            $this->Session->setFlash('Votre équipe a été supprimé');
+        } else {
+            $this->Session->setFlash('Une erreur est survenue lors de la suppression');
+        }
+        $this->redirect($this->referer());
     }
 
     /**
