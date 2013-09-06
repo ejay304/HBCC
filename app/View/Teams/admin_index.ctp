@@ -1,5 +1,5 @@
 <h3>Liste des équipes </h3>
-<table class="table">
+<table>
     <tr>
         <th>Nom</th>
         <th>Groupe_id</th>

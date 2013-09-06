@@ -10,7 +10,7 @@
  */
 class Team extends AppModel {
 
-    var $hasMany = array('Post');
+    var $hasMany = array('Post','Training');
     var $validate = array(
         'photo' => array(
             'rule' => '/^.*\.(jpg|png|jpeg|JPG|PNG|JPEG)$/',
